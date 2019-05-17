@@ -1,0 +1,102 @@
+// The code has one function that accepts arrays and generates a random sets of number using the srand function
+// Totally full arrays with random numbers
+// Programmer: Khelan Modi
+// date modified: April 11th, 2019
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+// Function Prototype
+void printBanner(ostream &output = cout);
+void loadArray(int myArr[], int size);
+void printArray(const int myArr[], int size, int perLine = 5, ostream &output = cout);
+
+int main()
+{
+	system("title Totally full array with random numbers.By K.Modi");
+	system("color 3f");
+
+	// Constant integers to pass arguments to array;
+	const int 
+		SIZE_BIG = 100, 
+		SIZE_SMALL = 12;
+
+	// Declaring arrays with different arguments
+	int 
+		smallArray[SIZE_SMALL], 
+		bigArray[SIZE_BIG];
+
+	// Declaring a output file to store numbers in an external file
+	ofstream outputFile;
+
+	printBanner(); // printing the banner on the monitor. 
+
+	// Saving numbers to a file named "Banner and numbers"
+	outputFile.open("Banner and numbers.txt");
+
+	printBanner(outputFile); // printing to the output file
+
+	cout << " \t ********************   SMALL array   ********************\n\n";
+
+	// loading the number to the array
+	cout << "I am about to fully load smallArray with random generated numbers...";
+	loadArray(smallArray, SIZE_SMALL);  
+	cout << "\n\nFinished loading smallArray...\n\n";
+
+	// Printing the array 
+	cout << "I am about to call printArray (with the defalut value for the perLine)...\n";
+	printArray(smallArray, SIZE_SMALL);  
+	printArray(smallArray, SIZE_SMALL, 5, outputFile);  
+
+	system("pause");  system("CLS");
+
+	// Array that has 100 numbers in it
+	cout << "\n\t ********************   BIG array   ********************\n\n";
+
+	// loading the numbers in the array
+	cout << "I am about to fully load bigArray with random generated numbers...";
+	loadArray(bigArray, SIZE_BIG); 
+	cout << "\n\nFinished loading bigArray ... \n\n";
+
+	// printing the array on the monitor and in the output file 
+	cout << "I am about to call printArray (with the defalut value for the perLine)...\n";
+	printArray(bigArray, SIZE_BIG, 8);  
+	printArray(bigArray, SIZE_BIG, 8, outputFile);   
+
+	system("pause");
+
+	return 0;
+}
+
+// function definition that prints the banner 
+void printBanner(ostream &output)  // DONE
+{
+	output
+		<< "                                                          \n"
+		<< "\t\t       This is a lab on completely filled arrays      \n"
+		<< "\t\t            with randomly generated numbers           \n"
+		<< "\t\t  the SAME load function is used to load BOTH arrays  \n"
+		<< "\t\t the SAME print function is used to print BOTH arrays \n"
+		<< "\t\t                       by K.Modi                      \n\n\n";
+}
+
+// function definition that loads random numbers in the array
+void loadArray(int myArr[], int size)
+{
+	// Generating a random number after each iteration
+	unsigned seed = time(0);
+	srand(seed);
+	
+	for (int count = 0; count < size; count++)
+		myArr[count] = rand();
+}
+
+// function definition that prints the numbers that are stored in the array.
+void printArray(const int myArr[], int size, int perLine, ostream &output)  // DONE
+{
+	for (int x = 0; x < size; x++)
+		output << setw(8) << myArr[x] << ((x + 1) % perLine == 0 ? "\n" : " ");
+	output << "\n\n";
+}
